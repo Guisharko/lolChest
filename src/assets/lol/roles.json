@@ -1060,5 +1060,48 @@
     "roles": [
     "SUPPORT"
     ]
-    }
+    },
+    "134": {
+      "id": "Syndra",
+      "key": "134",
+      "roles": [
+      "MID"
+      ]
+      },
+    "8": {
+      "id": "Vladimir",
+      "key": "8",
+      "roles": [
+      "TOP",
+      "MID"
+      ]
+      },
+    "78": {
+      "id": "Poppy",
+      "key": "78",
+      "roles": [
+      "TOP"
+      ]
+      },
+    "133": {
+      "key": "133",
+      "id": "Quinn",
+      "roles": [
+        "TOP"
+      ]
+    },
+    "246": {
+      "key": "246",
+      "id": "Qiyana",
+      "roles": [
+        "JUNGLE",
+        "MID"
+      ]},
+      "875": {
+        "id": "Sett",
+        "roles": [
+          "TOP",
+          "JUNGLE"
+        ],
+          "key": "875" }
 }

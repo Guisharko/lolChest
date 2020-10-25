@@ -91,9 +91,14 @@ export class SummonerComponent implements OnInit {
           this.cdragon.getChampionData(champion.championId).subscribe(champData => {
             champion.championName = champData.name;
           });
-          console.log(champion);
+          if (!this.jsonRoles[champion.championId]){
+          champion.championRoles = "";
+          } else {
+            champion.championRoles = this.jsonRoles[champion.championId].roles;
+          }
+
           champion.championImage = this.cdragon.getPortrait(champion.championId);
-          champion.championRoles = this.jsonRoles[champion.championId].roles;
+  
         });
         this.champions = champions;
       });
