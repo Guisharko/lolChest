@@ -47,3 +47,19 @@ Thumbs.db
 /src/environments/environment.ts
 /src/environments/environment.prod.ts
 
+
+###> gfi-centre-ouest/docker-devbox ###
+/docker-compose.yml
+/.certs/lol-chest.test.key
+/.certs/lol-chest.test.crt
+/.certs/.signer.crt
+/.bin/ncu
+/.bin/npm
+/.docker/node/Dockerfile
+/.docker/node/fixuid.tar.gz
+/*ddb.local.*
+/.bin/dc
+/.bash_enter
+/.bash_leave
+/.bin/ng
+###< gfi-centre-ouest/docker-devbox ###

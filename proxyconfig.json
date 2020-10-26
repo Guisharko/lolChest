@@ -1,0 +1,18 @@
+{
+  "/api": {
+    "target": "https://euw1.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/euw1": ""
+    }
+  },
+  "/dragon": {
+    "target": "http://ddragon.leagueoflegends.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/dragon": ""
+    }
+  }
+}
