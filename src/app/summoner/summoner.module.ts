@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {SharedModule} from '../shared/shared.module';
 import { CurrentMatchComponent } from './containers/current-match/current-match.component';
+import {UiModule} from "../ui/ui.module";
 
 @NgModule({
   declarations: [SummonerComponent, CurrentMatchComponent],
@@ -20,6 +21,7 @@ import { CurrentMatchComponent } from './containers/current-match/current-match.
     Ng2SearchPipeModule,
     Ng2SearchPipeModule,
     SharedModule,
+    UiModule,
   ]
 })
 export class SummonerModule {

@@ -14,7 +14,8 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   exports: [
-    UiComponent
+    UiComponent,
+    HeaderComponent
   ]
 })
 export class UiModule { }

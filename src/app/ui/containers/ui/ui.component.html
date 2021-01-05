@@ -1,23 +1,11 @@
-<header class="container">
-  <app-header #header class="row d-flex justify-content-center"></app-header>
-</header>
-
-<main [ngClass]="{'close-aside': !header.open}">
-
-  <div class="position-fixed" [ngClass]="{'shadow': header.open}" (click)="header.toggle()">
+<main>
+  <div class="position-fixed" >
   </div>
-
-  <aside>
-    <div class="scroller">
-<!--      <app-nav></app-nav>-->
-    </div>
-  </aside>
 
   <div class="page">
 
     <div class="contents">
       <router-outlet></router-outlet>
-      <!-- ici le router genere les template dans le dom des components instanciés par le router -->
     </div>
 
     <footer>

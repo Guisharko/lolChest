@@ -34,15 +34,20 @@
     text-align: center;
     font-weight: bold;
   }
+  &:hover {
+    transform: scale(1.2);
+    z-index: 1;
+    transition-duration: 0.5s;
+  }
 }
 .champ {
   object-fit: cover;
-  width: 170px;
+  width: 185px;
+  height: 185px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .champChest{
   filter: grayscale(1);
-  position: absolute;
 }
 .front {
   position: relative;
@@ -53,9 +58,6 @@
   bottom: 0;
   opacity: 0.6;
 }
-.granted {
-  position: absolute;
-}
 .position-icon{
   max-width: 80px;
   height: auto;
@@ -63,4 +65,30 @@
 
 .input-hidden {
   display: none;
+}
+.background-top{
+  background-image: url(../../../../assets/images/background-top.jpg);
+  background-attachment: fixed;
+  height: 600px;
+  max-height: 80vh;
+  @media screen and (max-width: 640px) {
+    background-image: url(../../../../assets/images/background-top-mobile.jpg);
+  }
+}
+.col-md-4 {
+  padding: 0;
+}
+.background-chances{
+  background-image: url(../../../../assets/images/background-chest.jpg);
+  background-attachment: scroll;
+  height: 600px;
+  @media screen and (max-width: 640px) {
+    height: 900px;
+    background-image: url(../../../../assets/images/background-chest-mobile.jpg);
+  }
+
+}
+.summoner{
+  background: rgb(0,1,5);
+  background: linear-gradient(180deg, rgba(0,1,5,1) 0%, rgba(17,68,83,1) 100%);
 }

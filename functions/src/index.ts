@@ -40,7 +40,7 @@ const apiForwardingUrl = "https://euw1.api.riotgames.com";
 // Logging
 server.set('port',3000);
 server.all("/lol/*", function(req: any, res: any) {
-  apiProxy.web(req, res, {target: apiForwardingUrl});
+  apiProxy.web(req, res, {target: apiForwardingUrl, changeOrigin: true, secure: false});
 });
 server.listen(server.get('port'), function() {
   console.log('Express server listening on port ' + server.get('port'));
