@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {map} from 'rxjs/operators';
 import {cors} from 'cors';
-import { version } from 'process';
+import {version} from 'process';
 import {DdragonService} from './ddragon.service';
 
 const httpOptions = {
@@ -21,18 +21,18 @@ export class ChampionService {
   baseUrl: string;
   data: string;
   versions: any;
-  championsUrl : string;
+  championsUrl: string;
 
-  constructor(private ddragonService: DdragonService,public http: HttpClient) {
-    
+  constructor(private ddragonService: DdragonService, public http: HttpClient) {
+
     this.baseUrl = 'http://ddragon.leagueoflegends.com/cdn/';
     this.data = '/data/en_US/champion.json';
     this.versions = this.ddragonService.getVersion();
-    this.championsUrl = this.baseUrl+this.versions+this.data;
+    this.championsUrl = this.baseUrl + this.versions + this.data;
   }
 
   public getChampions(optionalParam?: HttpParams) {
-    return this.getDataResult(optionalParam );
+    return this.getDataResult(optionalParam);
   }
 
   public getDataResult(optionalParam?: HttpParams) {

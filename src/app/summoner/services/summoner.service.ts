@@ -59,7 +59,7 @@ export class SummonerService {
         httparams = httparams.set(key, optionalParam.get(key));
       });
     }
-    return this.http.get<any>(`${this.https}${this.baseUrl}${region}/${lolUrl}${url}`, {headers : this.headers, params: httparams})
+    return this.http.get<any>(`${lolUrl}${url}`, {headers : this.headers, params: httparams})
       .pipe(
         map(data => {
           if (data && data.results) {
