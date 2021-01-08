@@ -35,9 +35,11 @@
     font-weight: bold;
   }
   &:hover {
-    transform: scale(1.2);
-    z-index: 1;
-    transition-duration: 0.5s;
+    @media screen and (min-width: 992px) {
+      transform: scale(1.2);
+      z-index: 1;
+      transition-duration: 0.5s;
+    }
   }
 }
 .champ {
@@ -61,34 +63,43 @@
 .position-icon{
   max-width: 80px;
   height: auto;
+  filter: drop-shadow(8px 8px 4px black);
+  cursor: pointer;
 }
 
 .input-hidden {
   display: none;
 }
 .background-top{
-  background-image: url(../../../../assets/images/background-top.jpg);
+  background-image: url(../../../../assets/images/itl.jpg);
   background-attachment: fixed;
-  height: 600px;
-  max-height: 80vh;
-  @media screen and (max-width: 640px) {
-    background-image: url(../../../../assets/images/background-top-mobile.jpg);
+  background-position: bottom;
+  height: 100vh;
+  .container{
+    height: 100vh;
   }
+  color: white;
 }
 .col-md-4 {
   padding: 0;
 }
 .background-chances{
-  background-image: url(../../../../assets/images/background-chest.jpg);
+  color: white;
+  background-image: url(../../../../assets/images/itl.jpg);
   background-attachment: scroll;
-  height: 600px;
-  @media screen and (max-width: 640px) {
-    height: 900px;
-    background-image: url(../../../../assets/images/background-chest-mobile.jpg);
+  height: 60vh;
+  background-position: bottom;
+  @media screen and (max-width: 992px) {
+    height: auto;
   }
-
+  h2{
+    filter: drop-shadow(2px 4px 6px black);
+  }
 }
-.summoner{
-  background: rgb(0,1,5);
-  background: linear-gradient(180deg, rgba(0,1,5,1) 0%, rgba(17,68,83,1) 100%);
+
+.search-header{
+  padding-top: 30vh;
+  .form-control,.search {
+    filter: drop-shadow(2px 4px 6px black);
+  }
 }

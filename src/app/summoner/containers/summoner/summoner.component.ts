@@ -29,7 +29,7 @@ export class SummonerComponent implements OnInit {
   chestValue = '';
   roleValue = '';
   roleIconValue = '';
-  property = 'championName';
+  property = 'championPoints';
   propertyValue = '';
   chestOptions = [
     {value: '', viewValue: 'All'},
@@ -37,8 +37,8 @@ export class SummonerComponent implements OnInit {
     {value: 'false', viewValue: 'Not Yet'}
   ];
   orderyByOptions = [
-    {value: 'championName', viewValue: 'Champion Name'},
     {value: 'championPoints', viewValue: 'Experience'},
+    {value: 'championName', viewValue: 'Champion Name'},
     {value: 'championLevel', viewValue: 'Level'}
   ];
   roles = [
@@ -98,7 +98,7 @@ export class SummonerComponent implements OnInit {
           }
 
           champion.championImage = this.cdragon.getPortrait(champion.championId);
-  
+
         });
         this.champions = champions;
       });

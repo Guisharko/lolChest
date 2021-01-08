@@ -14,14 +14,17 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "api-key-auth": "^0.2.3",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.2",
     "firebase-admin": "^8.6.0",
     "firebase-functions": "^3.3.0",
     "http-proxy": "^1.18.1",
     "http-proxy-middleware": "^1.0.6",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.7",

@@ -1,10 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 body{
-  background: rgb(0,1,5);
+  background-color: #f8f9fa;
+  background-image: url("https://www.transparenttextures.com/patterns/beige-paper.png");
   min-height: 100vh;
-  color: white;
 }
 h1{
   color: darkgray;
   font-family: 'Cinzel', serif;
+}
+.container-fluid{
+  padding: 0;
+}
+.form-inline{
+  flex-flow: unset;
 }
