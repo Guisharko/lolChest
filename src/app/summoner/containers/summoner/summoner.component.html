@@ -5,8 +5,13 @@
         <app-header class="row d-flex justify-content-center"></app-header>
         <form class="row d-flex justify-content-center form-inline md-form">
           <input class="form-control mr-sm-2 col-md-6" type="search" #box placeholder="Summoner" aria-label="Search">
+          <select id="orderyBy" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let region of regions" #regionBox [value]="region.value">
+              {{region.viewValue}}
+            </option>
+          </select>
           <button mdbBtn size="sm" outline="true" rounded="true" class="btn btn-light search"
-                  (click)="onEnter(box.value)"><i class="fas fa-search"></i></button>
+                  (click)="onEnter(box.value, regionValue)"><i class="fas fa-search"></i></button>
         </form>
       </div>
     </div>
@@ -17,8 +22,13 @@
         <img src="../../../../assets/images/chest-mini.png" alt="logo-header">
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" #box placeholder="{{summoner.name}}" aria-label="Search">
+          <select id="region" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let region of regions" #regionBox [value]="region.value">
+              {{region.viewValue}}
+            </option>
+          </select>
           <button mdbBtn size="sm" outline="true" rounded="true" class="btn btn-outline-dark search"
-                  (click)="onEnter(box.value)"><i class="fas fa-search"></i></button>
+                  (click)="onEnter(box.value, regionValue)"><i class="fas fa-search"></i></button>
         </form>
       </nav>
     </div>
@@ -40,13 +50,7 @@
         <div class="row mt-5">
           <div class="col-md-4 mb-1 col-lg-2 col-xs-6"
                *ngFor="let champion of champions | filter:roleIconValue |filter:'false' |slice:0:6">
-            <div class="card-champ text-center">
-              <img src="{{champion.championImage}}"
-                   alt="{{champion.championName}}" class="champ champwithoutChest">
-              <div class="info">
-                <h6>{{champion.championName}}</h6>
-              </div>
-            </div>
+          <app-card-champ [champion]="champion"></app-card-champ>
           </div>
         </div>
       </div>
@@ -98,63 +102,11 @@
             </div>
         </div>
       </div>
-<!--      <h2 class="text-center mt-5">Filter :</h2>-->
-<!--      <div class="row">-->
-<!--        <div class="md-form mt-2 mb-2 col-lg-3 col-md-6">-->
-<!--          <label for="searchChamp" class="">Champion</label>-->
-<!--          <input type="text" name="text" [(ngModel)]="searchChamp" id="searchChamp" class="form-control">-->
-<!--        </div>-->
-<!--        <div class="md-form mt-2 mb-2 col-lg-2 col-md-6">-->
-<!--          <label for="role" class="">Role</label>-->
-<!--          <select id="role" class="browser-default custom-select" [(ngModel)]="roleValue">-->
-<!--            <option *ngFor="let role of roles" [value]="role.value">-->
-<!--              {{role.viewValue}}-->
-<!--            </option>-->
-<!--          </select>-->
-<!--        </div>-->
-<!--        <div class="md-form mt-2 mb-2 col-lg-2 col-md-6">-->
-<!--          <label for="chest" class="">Chest</label>-->
-<!--          <select id="chest" class="browser-default custom-select" [(ngModel)]="chestValue">-->
-<!--            <option *ngFor="let chestOption of chestOptions" [value]="chestOption.value">-->
-<!--              {{chestOption.viewValue}}-->
-<!--            </option>-->
-<!--          </select>-->
-<!--        </div>-->
-<!--        <div class="md-form mt-2 mb-2 col-lg-3 col-md-6">-->
-<!--          <label for="orderyBy" class="">Order</label>-->
-<!--          <select id="orderyBy" class="browser-default custom-select" [(ngModel)]="property">-->
-<!--            <option *ngFor="let orderyByOption of orderyByOptions" [value]="orderyByOption.value">-->
-<!--              {{orderyByOption.viewValue}}-->
-<!--            </option>-->
-<!--          </select>-->
-<!--        </div>-->
-<!--        <div class="md-form mt-2 mb-2 col-lg-2 col-md-3">-->
-<!--          <label for="orderyByValue" class="">By</label>-->
-<!--          <select id="orderyByValue" class="browser-default custom-select" [(ngModel)]="propertyValue">-->
-<!--            <option value='asc'>Asc</option>-->
-<!--            <option value='desc'>Desc</option>-->
-<!--          </select>-->
-<!--        </div>-->
-<!--      </div>-->
 
       <div class="row">
         <div class="col-md-4 mb-1 col-lg-2 col-xs-6"
              *ngFor="let champion of champions | filter:searchChamp |filter:chestValue|orderBy:propertyValue:property| filter:roleValue ">
-          <div class="card-champ text-center granted" *ngIf="champion.chestGranted">
-            <img src="{{champion.championImage}}"
-                 alt="{{champion.championName}}" class="champ champChest">
-            <!--          <img alt="logo" class="front" src="../../../../assets/images/chest.png">-->
-            <div class="info">
-              <h6>{{champion.championName}}</h6>
-            </div>
-          </div>
-          <div class="card-champ text-center" *ngIf="!champion.chestGranted">
-            <img src="{{champion.championImage}}"
-                 alt="{{champion.championName}}" class="champ champwithoutChest">
-            <div class="info">
-              <h6>{{champion.championName}}</h6>
-            </div>
-          </div>
+             <app-card-champ [champion]="champion"></app-card-champ>
         </div>
       </div>
     </div>

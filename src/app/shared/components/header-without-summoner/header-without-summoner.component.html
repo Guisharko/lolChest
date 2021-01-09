@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="search-header">
+        <app-header class="row d-flex justify-content-center"></app-header>
+        <form class="row d-flex justify-content-center form-inline md-form">
+        <input class="form-control mr-sm-2 col-md-6" type="search" #box placeholder="Summoner" aria-label="Search">
+        <button mdbBtn size="sm" outline="true" rounded="true" class="btn btn-light search"
+                (click)="onEnter(box.value)"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+</div>

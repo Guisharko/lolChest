@@ -21,36 +21,6 @@
   border-radius: 5px;
 }
 
-.card-champ {
-  border-radius: 8px;
-  position: relative;
-  .info{
-    height: 30px;
-    width: 170px;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-  }
-  &:hover {
-    @media screen and (min-width: 992px) {
-      transform: scale(1.2);
-      z-index: 1;
-      transition-duration: 0.5s;
-    }
-  }
-}
-.champ {
-  object-fit: cover;
-  width: 185px;
-  height: 185px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-.champChest{
-  filter: grayscale(1);
-}
 .front {
   position: relative;
   max-width: 150px;

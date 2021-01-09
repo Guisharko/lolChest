@@ -1,15 +1,90 @@
 {
-  "/lol/*": {
-    "target": "https://euw1.api.riotgames.com",
-    "secure": false,
-    "changeOrigin": true
-  },
   "/dragon": {
     "target": "http://ddragon.leagueoflegends.com",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
       "^/api/dragon": ""
+    }
+  },
+  "/euw1/*": {
+    "target": "https://euw1.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/euw1/": "/"
+    }
+  },
+  "/br1/*": {
+    "target": "https://br1.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/br1/": "/"
+    }
+  },
+  "/eun1/*": {
+    "target": "https://eun1.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/eun1/": "/"
+    }
+  },
+  "/jp1/*": {
+    "target": "https://jp1.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/jp1/": "/"
+    }
+  },
+  "/kr/*": {
+    "target": "https://kr.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/kr/": "/"
+    }
+  },
+  "/la1/*": {
+    "target": "https://la1.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/la1/": "/"
+    }
+  },
+  "/la2/*": {
+    "target": "https://la2.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/la2/": "/"
+    }
+  },
+  "/oc1/*": {
+    "target": "https://oc1.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/oc1/": "/"
+    }
+  },
+  "/ru/*": {
+    "target": "https://ru.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/ru/": "/"
+    }
+  },
+  "/tr1/*": {
+    "target": "https://tr1.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/tr1/": "/"
     }
   }
 }

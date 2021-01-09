@@ -27,6 +27,7 @@ export class SummonerComponent implements OnInit {
   jsonRoles: any = (role as any).default;
   searchChamp;
   chestValue = '';
+  regionValue = 'euw1';
   roleValue = '';
   roleIconValue = '';
   property = 'championPoints';
@@ -79,14 +80,13 @@ export class SummonerComponent implements OnInit {
   ) {
   }
 
-  region = 'euw1';
   value = '';
 
-  getSummonersChampions(region = 'euw1') {
-    this.summonerService.getSummoner(this.region, this.value.replace(' ', '+')).subscribe(summoner => {
+  getSummonersChampions(regionValue = 'euw1') {
+    this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
       this.summoner = summoner;
 
-      this.summonerService.getChampionMasteries(this.region, this.summoner.id).subscribe(champions => {
+      this.summonerService.getChampionMasteries(regionValue, this.summoner.id).subscribe(champions => {
         champions.forEach(champion => {
           this.cdragon.getChampionData(champion.championId).subscribe(champData => {
             champion.championName = champData.name;
@@ -123,8 +123,9 @@ export class SummonerComponent implements OnInit {
     // this.getSummonersChampions();
   }
 
-  onEnter(value: string) {
+  onEnter(value: string, region: string) {
+    
     this.value = value;
-    this.getSummonersChampions(this.region);
+    this.getSummonersChampions(region);
   }
 }

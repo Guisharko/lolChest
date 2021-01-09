@@ -22,6 +22,7 @@ import {UiModule} from "../ui/ui.module";
     Ng2SearchPipeModule,
     SharedModule,
     UiModule,
+    SharedModule,
   ]
 })
 export class SummonerModule {

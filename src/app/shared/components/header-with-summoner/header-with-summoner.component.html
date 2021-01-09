@@ -1,0 +1,10 @@
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="summoner">
+    <img src="../../../../assets/images/chest-mini.png" alt="logo-header">
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" #box placeholder="{{summoner.name}}" aria-label="Search">
+      <button mdbBtn size="sm" outline="true" rounded="true" class="btn btn-outline-dark search"
+              (click)="onEnter(box.value)"><i class="fas fa-search"></i></button>
+    </form>
+  </nav>
+</div>
