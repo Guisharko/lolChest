@@ -27,7 +27,7 @@ export class DdragonService {
     this.getDataResult(this.apiVersionUrl, optionalParam ).subscribe(lolVersion => {
         console.log(lolVersion[0]);
    });
-   //  return '10.18.1';
+    return '11.1.1';
   }
 
 
