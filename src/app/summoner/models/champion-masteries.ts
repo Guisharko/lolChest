@@ -10,6 +10,7 @@ export class ChampionMasteries {
   summonerId: string;
   championName: string;
   championImage: string;
+  championImageMini: string;
   championRoles: [];
 
   constructor(fields?: Partial<ChampionMasteries>) {

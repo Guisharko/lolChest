@@ -22,6 +22,7 @@ export class CurrentMatchComponent implements OnInit {
   summoner: Summoner;
   champions: ChampionMasteries[];
   @Output() name: string;
+  banned: [];
 
   constructor(
     private summonerService: SummonerService,
@@ -32,7 +33,7 @@ export class CurrentMatchComponent implements OnInit {
 ) {
   }
 
-  value = '';
+  value = 'Shikoo';
 
   getCurrentGame(regionValue = 'euw1') {
     this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
@@ -43,6 +44,7 @@ export class CurrentMatchComponent implements OnInit {
             participant.championName = champData.name;
           });
           participant.championImage = this.cdragon.getPortrait(participant.championId);
+          participant.championImageMini = this.cdragon.getMini(participant.championId);
           this.summonerService.getChampionMasteries(regionValue, participant.summonerId).subscribe(champions => {
             champions.forEach(champion => {
               if (participant.championId === champion.championId) {
@@ -52,11 +54,12 @@ export class CurrentMatchComponent implements OnInit {
             });
           });
         });
-        currentMatch.bannedChampions.forEach(bannedChampion => {
+        currentMatch.bannedChampions.forEach((bannedChampion, index) => {
           this.cdragon.getChampionData(bannedChampion.championId).subscribe(champData => {
             bannedChampion.championName = champData.name;
           });
-          bannedChampion.championImage = this.cdragon.getPortrait(bannedChampion.championId);
+          bannedChampion.championImageMini = this.cdragon.getMini(bannedChampion.championId);
+          //this.banned[index] = this.cdragon.getMini(bannedChampion.championId);
         });
         console.log(currentMatch);
         this.currentMatch = currentMatch;

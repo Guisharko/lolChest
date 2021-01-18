@@ -29,6 +29,10 @@ export class CdragonService {
   public getPortrait(id: string, optionalParam?: HttpParams) {
     return this.apiBaseUrl + this.ddragonService.getVersion() + '/champion/'  + id + '/splash-art/centered';
   }
+  
+  public getMini(id: string, optionalParam?: HttpParams) {
+    return this.apiBaseUrl + this.ddragonService.getVersion() + '/champion/'  + id + '/square';
+  }
   public getChampionData(id: string, optionalParam?: HttpParams) {
     return this.getDataResult(this.apiBaseUrl + this.ddragonService.getVersion() + '/champion/'  + id + '/data', optionalParam );
   }

@@ -1,6 +1,6 @@
 <div class="card-champ text-center granted" *ngIf="champion.chestGranted">
   <img src="{{champion.championImage}}"
-       alt="{{champion.championName}}" class="champ champChest">
+       alt="{{champion.championName}}" title="{{champion.championName}}" class="champ champChest">
   <div class="info">
     <h6>{{champion.championName}}</h6>
     <p *ngIf="participant">{{participant.summonerName}}</p>
@@ -8,7 +8,7 @@
 </div>
 <div class="card-champ text-center" *ngIf="!champion.chestGranted">
   <img src="{{champion.championImage}}"
-       alt="{{champion.championName}}" class="champ champwithoutChest">
+       alt="{{champion.championName}}" title="{{champion.championName}}" class="champ champwithoutChest">
   <div class="info">
     <h6>{{champion.championName}}</h6>
     <p *ngIf="participant">{{participant.summonerName}}</p>
