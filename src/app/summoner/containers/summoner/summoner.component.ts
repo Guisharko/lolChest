@@ -92,7 +92,7 @@ export class SummonerComponent implements OnInit {
             champion.championName = champData.name;
           });
           if (!this.jsonRoles[champion.championId]){
-          champion.championRoles = "";
+          champion.championRoles = '';
           } else {
             champion.championRoles = this.jsonRoles[champion.championId].roles;
           }
@@ -124,7 +124,6 @@ export class SummonerComponent implements OnInit {
   }
 
   onEnter(value: string, region: string) {
-    
     this.value = value;
     this.getSummonersChampions(region);
   }

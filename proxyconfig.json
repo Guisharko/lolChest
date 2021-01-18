@@ -7,6 +7,11 @@
       "^/api/dragon": ""
     }
   },
+  "/lol/*": {
+    "target": "https://euw1.api.riotgames.com",
+    "secure": false,
+    "changeOrigin": true
+  },
   "/euw1/*": {
     "target": "https://euw1.api.riotgames.com",
     "secure": false,

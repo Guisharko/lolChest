@@ -27,7 +27,7 @@ export class CurrentMatchService {
   }
 
   public getCurrentGame(region = 'euw1', url: string = '', optionalParam?: HttpParams) {
-     return this.summonerService.getDataResult(region,url,  this.urlCurrentGame, optionalParam );
+     return this.summonerService.getDataResult(region, url,  this.urlCurrentGame, optionalParam );
   }
 
   public getChampionMasteries(region = 'euw1', url: string = '', optionalParam?: HttpParams) {

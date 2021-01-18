@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
 import {map} from 'rxjs/operators';
-import {cors} from 'cors';
-import { version } from 'process';
+import {Subject} from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -18,18 +16,18 @@ const httpOptions = {
 export class DdragonService {
 
   apiVersionUrl: string;
-  lolVersion : string;
+  lolVersion: string;
 
   constructor(public http: HttpClient) {
-    this.apiVersionUrl = 'https://ddragon.leagueoflegends.com/api/versions.json'
+    this.apiVersionUrl = 'https://ddragon.leagueoflegends.com/api/versions.json';
   }
 
   public getVersion(optionalParam?: HttpParams) {
- //    this.getDataResult(this.apiVersionUrl, optionalParam ).subscribe(lolVersion => {
-  //          this.lolVersion = lolVersion[0];
-  //          console.log(this.lolVersion);
-  //  })
-    return '10.18.1';
+    const subject = new Subject();
+    this.getDataResult(this.apiVersionUrl, optionalParam ).subscribe(lolVersion => {
+        console.log(lolVersion[0]);
+   });
+   //  return '10.18.1';
   }
 
 

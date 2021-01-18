@@ -4,33 +4,27 @@
     <button mdbBtn size="sm" outline="true" rounded="true" class="btn btn-outline-dark search"
             (click)="onEnter(box.value)"><i class="fas fa-search"></i></button>
   </form>
-  <div class="row">
+  <div class="row" *ngIf="currentMatch">
     <div class="col-12">
       {{ currentMatch.gameMode}}
     </div>
     <div class="row">
-      <div class="card-champ participants" *ngFor="let participant of currentMatch.participants">
+      <div class="card-champ participants mb-5 mt-5" *ngFor="let participant of currentMatch.participants">
         <div *ngIf="participant.teamId == '100'" class="col-md-2">
-          <img src="../../../../assets/lol/loading/{{participant.championImage}}"
-               alt="{{participant.championName}}" class="champ">
-          <div class="info">
-            <h3>{{participant.summonerName}}</h3>
-            <h4>{{participant.chest}}</h4>
-          </div>
+          <app-card-champ [champion]="participant" [participant]="participant"></app-card-champ>
+        </div>
+        <div *ngIf="participant.teamId == '200'" class="col-md-2">
+          <app-card-champ [champion]="participant" [participant]="participant"></app-card-champ>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="card-champ participants" *ngFor="let participant of currentMatch.participants" >
-        <div *ngIf="participant.teamId == '200'" class="col-md-2">
-          <img src="../../../../assets/lol/loading/{{participant.championImage}}"
-               alt="{{participant.championName}}" class="champ">
-          <div class="info">
-            <h3>{{participant.summonerName}}</h3>
-            <h4>{{participant.chest}}</h4>
-          </div>
-        </div>
+      <div class="card-champ banned" *ngFor="let bannedChampion of currentMatch.bannedChampions" >
+          <app-card-champ [champion]="bannedChampion"></app-card-champ>
       </div>
     </div>
+  </div>
+  <div class="row" *ngIf="currentMatch">
+    <p>There is not match for the moment</p>
   </div>
 </div>

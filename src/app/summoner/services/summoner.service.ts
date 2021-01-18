@@ -33,7 +33,7 @@ export class SummonerService {
   products: any = (data as any).default;
   jsonRoles: any = (role as any).default;
   champions: ChampionMasteries[];
-  
+
   constructor(public http: HttpClient, private championService: ChampionService, private cdragon: CdragonService) {
     this.headers = new HttpHeaders();
     this.headers.append('Access-Control-Allow-Headers', '*');
@@ -63,14 +63,14 @@ export class SummonerService {
   }
 
   public getDataResult(region = 'euw1', url: string = '', lolUrl: string = '', optionalParam?: HttpParams) {
-    let httparams = new HttpParams()
-      .set('api_key', this.apikey);
+    let httparams = new HttpParams();
+      // .set('api_key', this.apikey);
     if (optionalParam) {
       optionalParam.keys().forEach((key) => {
         httparams = httparams.set(key, optionalParam.get(key));
       });
     }
-    return this.http.get<any>(`${region}/${lolUrl}${url}`, {headers : this.headers, params: httparams})
+    return this.http.get<any>(`${lolUrl}${url}`, {headers : this.headers, params: httparams})
       .pipe(
         map(data => {
           if (data && data.results) {
@@ -91,8 +91,8 @@ export class SummonerService {
           this.cdragon.getChampionData(champion.championId).subscribe(champData => {
             champion.championName = champData.name;
           });
-          if (!this.jsonRoles[champion.championId]){
-          champion.championRoles = "";
+          if (!this.jsonRoles[champion.championId]) {
+          champion.championRoles = '';
           } else {
             champion.championRoles = this.jsonRoles[champion.championId].roles;
           }

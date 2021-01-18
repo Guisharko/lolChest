@@ -13,5 +13,5 @@ export class CurrentGameParticipant {
   perks: Perks;
   championName: string;
   championImage: string;
-  chest: string;
+  chestGranted: string;
 }

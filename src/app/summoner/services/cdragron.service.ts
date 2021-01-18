@@ -19,7 +19,7 @@ const httpOptions = {
 export class CdragonService {
 
   apiBaseUrl: string;
-  lolVersion : string;
+  lolVersion: string;
 
 
   constructor(public http: HttpClient, private ddragonService: DdragonService) {
@@ -27,10 +27,10 @@ export class CdragonService {
   }
 
   public getPortrait(id: string, optionalParam?: HttpParams) {
-    return this.apiBaseUrl + this.ddragonService.getVersion()+ '/champion/'  + id + '/splash-art/centered';
+    return this.apiBaseUrl + this.ddragonService.getVersion() + '/champion/'  + id + '/splash-art/centered';
   }
   public getChampionData(id: string, optionalParam?: HttpParams) {
-    return this.getDataResult(this.apiBaseUrl + this.ddragonService.getVersion()+ '/champion/'  + id + '/data', optionalParam );
+    return this.getDataResult(this.apiBaseUrl + this.ddragonService.getVersion() + '/champion/'  + id + '/data', optionalParam );
   }
 
   public getDataResult(apiUrl: string , optionalParam?: HttpParams) {

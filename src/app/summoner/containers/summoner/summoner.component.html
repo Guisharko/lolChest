@@ -5,7 +5,7 @@
         <app-header class="row d-flex justify-content-center"></app-header>
         <form class="row d-flex justify-content-center form-inline md-form">
           <input class="form-control mr-sm-2 col-md-6" type="search" #box placeholder="Summoner" aria-label="Search">
-          <select id="orderyBy" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
+          <select id="regionSelect" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
             <option *ngFor="let region of regions" #regionBox [value]="region.value">
               {{region.viewValue}}
             </option>

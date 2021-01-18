@@ -1,13 +1,16 @@
 import {Component, OnInit, Output} from '@angular/core';
 import {Summoner} from '../../models/summoner';
 import {ChampionMasteries} from '../../models/champion-masteries';
-import * as data from '../../../../assets/lol/champions.json';
 import {SummonerService} from '../../services/summoner.service';
 import {HttpClient} from '@angular/common/http';
 import {FormBuilder} from '@angular/forms';
 import {CurrentMatchService} from '../../services/current-match.service';
 import {CurrentMatch} from '../../models/current-match';
 import {CurrentGameParticipant} from '../../models/current-game-participant';
+import {Leagues} from '../../models/leagues';
+import {Tft} from '../../models/tft';
+import {ChampionService} from '../../services/champion.service';
+import {CdragonService} from '../../services/cdragron.service';
 
 @Component({
   selector: 'app-current-match',
@@ -19,33 +22,44 @@ export class CurrentMatchComponent implements OnInit {
   summoner: Summoner;
   champions: ChampionMasteries[];
   @Output() name: string;
-  products: any = (data as any).default;
+
   constructor(
     private summonerService: SummonerService,
     private currentMatchService: CurrentMatchService,
     private http: HttpClient,
-    private fb: FormBuilder
-  ) {
+    private fb: FormBuilder,
+    private cdragon: CdragonService
+) {
   }
 
-  value = 'Smodjhog';
+  value = '';
 
-  getCurrentGame() {
-    this.summonerService.getSummoner(this.value.replace(' ', '+')).subscribe(summoner => {
+  getCurrentGame(regionValue = 'euw1') {
+    this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
       this.summoner = summoner;
-      this.currentMatchService.getCurrentGame(this.summoner.id).subscribe(currentMatch => {
+      this.currentMatchService.getCurrentGame(regionValue, this.summoner.id).subscribe(currentMatch => {
         currentMatch.participants.forEach(participant => {
-          participant.championName = this.products.data[participant.championId].name;
-          participant.championImage = this.products.data[participant.championId].id + '_0.jpg';
-          this.summonerService.getChampionMasteries(participant.summonerId).subscribe(champions => {
+          this.cdragon.getChampionData(participant.championId).subscribe(champData => {
+            participant.championName = champData.name;
+          });
+          participant.championImage = this.cdragon.getPortrait(participant.championId);
+          this.summonerService.getChampionMasteries(regionValue, participant.summonerId).subscribe(champions => {
             champions.forEach(champion => {
               if (participant.championId === champion.championId) {
-                participant.chest = champion.chestGranted;
+                // participant.chestGranted = champion.chestGranted;
+                participant.chestGranted = false;
               }
             });
           });
-          this.currentMatch = currentMatch;
         });
+        currentMatch.bannedChampions.forEach(bannedChampion => {
+          this.cdragon.getChampionData(bannedChampion.championId).subscribe(champData => {
+            bannedChampion.championName = champData.name;
+          });
+          bannedChampion.championImage = this.cdragon.getPortrait(bannedChampion.championId);
+        });
+        console.log(currentMatch);
+        this.currentMatch = currentMatch;
       });
     });
   }
