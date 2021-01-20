@@ -7,13 +7,14 @@ import { HeaderWithoutSummonerComponent } from './components/header-without-summ
 import { UiModule } from '../ui/ui.module';
 import { MiniCardChampComponent } from './components/mini-card-champ/mini-card-champ.component';
 import { ModalChampComponent } from './components/modal-champ/modal-champ.component';
+import { ValuesPipe } from './pipes/values.pipe';
 
 @NgModule({
-  declarations: [OrderByPipe, CardChampComponent, HeaderWithSummonerComponent, HeaderWithoutSummonerComponent, MiniCardChampComponent, ModalChampComponent],
+  declarations: [OrderByPipe, CardChampComponent, HeaderWithSummonerComponent, HeaderWithoutSummonerComponent, MiniCardChampComponent, ModalChampComponent, ValuesPipe],
   imports: [
     CommonModule,
     UiModule
   ],
-  exports: [OrderByPipe, CardChampComponent, HeaderWithSummonerComponent, HeaderWithoutSummonerComponent, MiniCardChampComponent]
+  exports: [OrderByPipe, CardChampComponent, HeaderWithSummonerComponent, HeaderWithoutSummonerComponent, MiniCardChampComponent, ValuesPipe]
 })
 export class SharedModule { }

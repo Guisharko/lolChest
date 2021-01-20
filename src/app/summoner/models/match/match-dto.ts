@@ -16,4 +16,5 @@ export class MatchDto {
   mapId: number
   gameMode: string;
   participants: ParticipantDto[];
+  participantsArray: any;
 }

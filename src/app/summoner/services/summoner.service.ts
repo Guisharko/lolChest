@@ -68,8 +68,8 @@ export class SummonerService {
   }
 
   public getDataResult(region = 'euw1', url: string = '', lolUrl: string = '', optionalParam?: HttpParams) {
-    let httparams = new HttpParams();
-      // .set('api_key', this.apikey);
+    let httparams = new HttpParams()
+       .set('api_key', this.apikey);
     if (optionalParam) {
       optionalParam.keys().forEach((key) => {
         httparams = httparams.set(key, optionalParam.get(key));

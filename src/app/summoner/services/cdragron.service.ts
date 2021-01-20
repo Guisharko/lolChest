@@ -26,14 +26,14 @@ export class CdragonService {
     this.apiBaseUrl = 'https://cdn.communitydragon.org/';
   }
 
-  public getPortrait(id: string, optionalParam?: HttpParams) {
+  public getPortrait(id: any, optionalParam?: HttpParams) {
     return this.apiBaseUrl + this.ddragonService.getVersion() + '/champion/'  + id + '/splash-art/centered';
   }
 
-  public getMini(id: string, optionalParam?: HttpParams) {
+  public getMini(id: any, optionalParam?: HttpParams) {
     return this.apiBaseUrl + this.ddragonService.getVersion() + '/champion/'  + id + '/square';
   }
-  public getChampionData(id: string, optionalParam?: HttpParams) {
+  public getChampionData(id: any, optionalParam?: HttpParams) {
     return this.getDataResult(this.apiBaseUrl + this.ddragonService.getVersion() + '/champion/'  + id + '/data', optionalParam );
   }
 

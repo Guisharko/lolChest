@@ -35,20 +35,20 @@
     <div class="container">
       <div class="row">
         <div class="col-12"
-             *ngFor="let matchDto of matchDtos">
+             *ngFor="let matchDto of matchList">
           {{matchDto.gameMode}}
-          <div class="col-12" *ngFor="let participantIdentity of matchDto.participantIdentities; let index = index;">
-            <div *ngIf="matchDto.participants[index].teamId == '100'">
-              {{participantIdentity.player.summonerName}}
-              {{ matchDto.participants[index].championId}}
-              {{ matchDto.participants[index].spell1Id}}
-              {{ matchDto.participants[index].spell2Id}}
+          <div class="col-12" *ngFor="let participant of matchDto.participantIdentities  ; let index = index;">
+            <div *ngIf="matchDto.participants[index].teamId == 100">
+              {{ participant.player.summonerName }}
+              <!-- <app-mini-card-champ [champion]="matchDto.participants[index].champion"></app-mini-card-champ> -->
+              <!-- {{ matchDto.participants[index].spell1Id}}
+              {{ matchDto.participants[index].spell2Id}} -->
             </div>
-            <div *ngIf="matchDto.participants[index].teamId == '200'">
-              {{participantIdentity.player.summonerName}}
-              {{ matchDto.participants[index].championId}}
-              {{ matchDto.participants[index].spell1Id}}
-              {{ matchDto.participants[index].spell2Id}}
+            <div *ngIf="matchDto.participants[index].teamId == 200">
+              {{ participant.player.summonerName }}
+              <!-- <app-mini-card-champ [champion]="matchDto.participants[index].champion"></app-mini-card-champ> -->
+              <!-- {{ matchDto.participants[index].spell1Id}}
+              {{ matchDto.participants[index].spell2Id}} -->
             </div>
           </div>
 
