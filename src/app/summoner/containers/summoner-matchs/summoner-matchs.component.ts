@@ -9,8 +9,8 @@ import {HttpClient} from '@angular/common/http';
 import {ChampionService} from '../../services/champion.service';
 import {FormBuilder} from '@angular/forms';
 import {CdragonService} from '../../services/cdragron.service';
-import {MatchDto} from '../../models/match/match-dto';
 import {MatchlistDto} from '../../models/match/matchlist-dto';
+import {MatchDto} from '../../models/match/match-dto';
 import {MatchReferenceDto} from '../../models/match/matchReferenceDto';
 import {MatchesService} from '../../services/matches.service';
 
@@ -28,10 +28,12 @@ export class SummonerMatchsComponent implements OnInit {
   jsonRoles: any = (role as any).default;
   searchChamp;
   matchlistDto: MatchlistDto;
+  matchDto: MatchDto;
+  matchDtos: MatchDto[];
   matchReferenceDto: MatchReferenceDto;
   regionValue = 'euw1';
   property = 'championPoints';
-
+  nbResults = 20;
   regions = [
     {value: 'euw1', viewValue: 'EUW-1'},
     {value: 'br1', viewValue: 'BR-1'},
@@ -61,23 +63,24 @@ export class SummonerMatchsComponent implements OnInit {
     this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
       this.summoner = summoner;
       this.summonerService.getMatchlists(regionValue, this.summoner.accountId).subscribe(matchlist => {
-        matchlist.matches.forEach(matchReferenceDto => {
-          this.matchesService.getMatch(regionValue, matchReferenceDto.gameId).subscribe(match => {
-            console.log(match);
+        matchlist.matches.slice(0, this.nbResults).forEach((matchReferenceDto, index) => {
+          this.matchesService.getMatch(regionValue, matchReferenceDto.gameId).subscribe(matchDto => {
+            this.matchDtos = matchDto;
+            console.log(matchDto);
           });
         });
       });
 
-      this.summonerService.getChampionMasteries(regionValue, this.summoner.id).subscribe(champions => {
-        champions.forEach(champion => {
-          this.cdragon.getChampionData(champion.championId).subscribe(champData => {
-            champion.championName = champData.name;
-          });
-          champion.championImage = this.cdragon.getPortrait(champion.championId);
-          champion.championImageMini = this.cdragon.getMini(champion.championId);
-        });
-        this.champions = champions;
-      });
+      // this.summonerService.getChampionMasteries(regionValue, this.summoner.id).subscribe(champions => {
+      //   champions.forEach(champion => {
+      //     this.cdragon.getChampionData(champion.championId).subscribe(champData => {
+      //       champion.championName = champData.name;
+      //     });
+      //     champion.championImage = this.cdragon.getPortrait(champion.championId);
+      //     champion.championImageMini = this.cdragon.getMini(champion.championId);
+      //   });
+      //   this.champions = champions;
+      // });
 
 //      this.summonerService.getLeague(this.summoner.id).subscribe(leagues => {
 //        leagues.forEach(league => {

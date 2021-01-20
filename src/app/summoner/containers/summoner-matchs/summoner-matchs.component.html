@@ -1,1 +1,61 @@
-<p>summoner-matchs works!</p>
+<div class="lolchest">
+  <div class="background-top" *ngIf="!summoner">
+    <div class="container">
+      <div class="search-header">
+        <app-header class="row d-flex justify-content-center"></app-header>
+        <form class="row d-flex justify-content-center form-inline md-form">
+          <input class="form-control mr-sm-2 col-md-6" type="search" #box placeholder="Summoner" aria-label="Search">
+          <select id="regionSelect" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let region of regions" #regionBox [value]="region.value">
+              {{region.viewValue}}
+            </option>
+          </select>
+          <button mdbBtn size="sm" outline="true" rounded="true" class="btn btn-light search"
+                  (click)="onEnter(box.value, regionValue)"><i class="fas fa-search"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="summoner" *ngIf="summoner">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="summoner">
+        <img src="../../../../assets/images/chest-mini.png" alt="logo-header">
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" #box placeholder="{{summoner.name}}" aria-label="Search">
+          <select id="region" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let region of regions" #regionBox [value]="region.value">
+              {{region.viewValue}}
+            </option>
+          </select>
+          <button mdbBtn size="sm" outline="true" rounded="true" class="btn btn-outline-dark search"
+                  (click)="onEnter(box.value, regionValue)"><i class="fas fa-search"></i></button>
+        </form>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12"
+             *ngFor="let matchDto of matchDtos">
+          {{matchDto.gameMode}}
+          <div class="col-12" *ngFor="let participantIdentity of matchDto.participantIdentities; let index = index;">
+            <div *ngIf="matchDto.participants[index].teamId == '100'">
+              {{participantIdentity.player.summonerName}}
+              {{ matchDto.participants[index].championId}}
+              {{ matchDto.participants[index].spell1Id}}
+              {{ matchDto.participants[index].spell2Id}}
+            </div>
+            <div *ngIf="matchDto.participants[index].teamId == '200'">
+              {{participantIdentity.player.summonerName}}
+              {{ matchDto.participants[index].championId}}
+              {{ matchDto.participants[index].spell1Id}}
+              {{ matchDto.participants[index].spell2Id}}
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
