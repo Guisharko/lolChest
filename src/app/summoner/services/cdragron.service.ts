@@ -23,13 +23,13 @@ export class CdragonService {
 
 
   constructor(public http: HttpClient, private ddragonService: DdragonService) {
-    this.apiBaseUrl = "https://cdn.communitydragon.org/";
+    this.apiBaseUrl = 'https://cdn.communitydragon.org/';
   }
 
   public getPortrait(id: string, optionalParam?: HttpParams) {
     return this.apiBaseUrl + this.ddragonService.getVersion() + '/champion/'  + id + '/splash-art/centered';
   }
-  
+
   public getMini(id: string, optionalParam?: HttpParams) {
     return this.apiBaseUrl + this.ddragonService.getVersion() + '/champion/'  + id + '/square';
   }

@@ -1,64 +1,37 @@
-import {Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform} from '@angular/core';
-import {SummonerService} from '../../services/summoner.service';
-import {HttpClient} from '@angular/common/http';
+import {Component, OnInit, Output} from '@angular/core';
 import {Summoner} from '../../models/summoner';
 import {ChampionMasteries} from '../../models/champion-masteries';
-import * as data from '../../../../assets/lol/champions.json';
-import * as role from '../../../../assets/lol/roles.json';
-import {FormBuilder} from '@angular/forms';
 import {Leagues} from '../../models/leagues';
 import {Tft} from '../../models/tft';
+import * as role from '../../../../assets/lol/roles.json';
+import {SummonerService} from '../../services/summoner.service';
+import {HttpClient} from '@angular/common/http';
 import {ChampionService} from '../../services/champion.service';
+import {FormBuilder} from '@angular/forms';
 import {CdragonService} from '../../services/cdragron.service';
-
+import {MatchDto} from '../../models/match/match-dto';
+import {MatchlistDto} from '../../models/match/matchlist-dto';
+import {MatchReferenceDto} from '../../models/match/matchReferenceDto';
+import {MatchesService} from '../../services/matches.service';
 
 @Component({
-  selector: 'app-summoner',
-  templateUrl: './summoner.component.html',
-  styleUrls: ['./summoner.component.scss']
+  selector: 'app-summoner-matchs',
+  templateUrl: './summoner-matchs.component.html',
+  styleUrls: ['./summoner-matchs.component.scss']
 })
-export class SummonerComponent implements OnInit {
+export class SummonerMatchsComponent implements OnInit {
   summoner: Summoner;
   champions: ChampionMasteries[];
   leagues: Leagues[];
   tfts: Tft[];
   @Output() name: string;
-  products: any = (data as any).default;
   jsonRoles: any = (role as any).default;
   searchChamp;
-  matchDto;
-  chestValue = '';
+  matchlistDto: MatchlistDto;
+  matchReferenceDto: MatchReferenceDto;
   regionValue = 'euw1';
-  roleValue = '';
-  roleIconValue = '';
   property = 'championPoints';
-  propertyValue = '';
-  chestOptions = [
-    {value: '', viewValue: 'All'},
-    {value: 'true', viewValue: 'Earned'},
-    {value: 'false', viewValue: 'Not Yet'}
-  ];
-  orderyByOptions = [
-    {value: 'championPoints', viewValue: 'Experience'},
-    {value: 'championName', viewValue: 'Champion Name'},
-    {value: 'championLevel', viewValue: 'Level'}
-  ];
-  roles = [
-    {value: 'TOP', viewValue: 'TOP'},
-    {value: 'JUNGLE', viewValue: 'JUNGLE'},
-    {value: 'MID', viewValue: 'MID'},
-    {value: 'ADC', viewValue: 'ADC'},
-    {value: 'SUPPORT', viewValue: 'SUPPORT'},
-    {value: '', viewValue: 'ALL'},
-  ];
-  rolesIcons = [
-    {value: 'TOP', viewValue: 'top'},
-    {value: 'JUNGLE', viewValue: 'jungle'},
-    {value: 'MID', viewValue: 'mid'},
-    {value: 'ADC', viewValue: 'bot'},
-    {value: 'SUPPORT', viewValue: 'support'},
-    {value: '', viewValue: 'all'},
-  ];
+
   regions = [
     {value: 'euw1', viewValue: 'EUW-1'},
     {value: 'br1', viewValue: 'BR-1'},
@@ -74,6 +47,7 @@ export class SummonerComponent implements OnInit {
 
   constructor(
     private summonerService: SummonerService,
+    private matchesService: MatchesService,
     private http: HttpClient,
     private championService: ChampionService,
     private fb: FormBuilder,
@@ -81,28 +55,30 @@ export class SummonerComponent implements OnInit {
   ) {
   }
 
-  value = '';
+  value = 'Guisharko';
 
-  getSummonersChampions(regionValue = 'euw1') {
+  getSummonersMatches(regionValue = 'euw1') {
     this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
       this.summoner = summoner;
-      console.log(this.summoner.accountId);
+      this.summonerService.getMatchlists(regionValue, this.summoner.accountId).subscribe(matchlist => {
+        matchlist.matches.forEach(matchReferenceDto => {
+          this.matchesService.getMatch(regionValue, matchReferenceDto.gameId).subscribe(match => {
+            console.log(match);
+          });
+        });
+      });
+
       this.summonerService.getChampionMasteries(regionValue, this.summoner.id).subscribe(champions => {
         champions.forEach(champion => {
           this.cdragon.getChampionData(champion.championId).subscribe(champData => {
             champion.championName = champData.name;
           });
-          if (!this.jsonRoles[champion.championId]){
-          champion.championRoles = '';
-          } else {
-            champion.championRoles = this.jsonRoles[champion.championId].roles;
-          }
-
           champion.championImage = this.cdragon.getPortrait(champion.championId);
-
+          champion.championImageMini = this.cdragon.getMini(champion.championId);
         });
         this.champions = champions;
       });
+
 //      this.summonerService.getLeague(this.summoner.id).subscribe(leagues => {
 //        leagues.forEach(league => {
 //          league.queueType = league.queueType.replace('RANKED_', '');
@@ -121,11 +97,11 @@ export class SummonerComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getSummonersChampions();
+    this.getSummonersMatches();
   }
 
   onEnter(value: string, region: string) {
     this.value = value;
-    this.getSummonersChampions(region);
+    this.getSummonersMatches(region);
   }
 }

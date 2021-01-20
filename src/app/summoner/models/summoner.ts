@@ -1,6 +1,6 @@
 export class Summoner {
   id: string;
-  accoundId: string;
+  accountId: string;
   puuid: string;
   name: string;
   profileIconId: string;

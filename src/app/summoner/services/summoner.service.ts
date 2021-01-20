@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {map} from 'rxjs/operators';
-import {cors} from 'cors';
 import {ChampionService} from '../../summoner/services/champion.service';
 import {CdragonService} from '../../summoner/services/cdragron.service';
 import { Summoner } from '../models/summoner';
@@ -29,6 +28,7 @@ export class SummonerService {
   urlChampionMateries: string;
   urlLeague: string;
   urlTft: string;
+  matchlists: string;
   https: string;
   products: any = (data as any).default;
   jsonRoles: any = (role as any).default;
@@ -44,6 +44,7 @@ export class SummonerService {
     this.urlChampionMateries = 'lol/champion-mastery/v4/champion-masteries/by-summoner/';
     this.urlLeague = 'lol/league/v4/entries/by-summoner/';
     this.urlTft = 'tft/league/v1/entries/by-summoner/';
+    this.matchlists = '/lol/match/v4/matchlists/by-account/';
   }
 
   public getSummoner(region = 'euw1', url: string = '', optionalParam?: HttpParams) {
@@ -62,9 +63,13 @@ export class SummonerService {
     return this.getDataResult(region, url,  this.urlTft, optionalParam );
   }
 
+  public getMatchlists(region = 'euw1', url: string = '', optionalParam?: HttpParams) {
+    return this.getDataResult(region, url,  this.matchlists, optionalParam );
+  }
+
   public getDataResult(region = 'euw1', url: string = '', lolUrl: string = '', optionalParam?: HttpParams) {
-    let httparams = new HttpParams()
-      .set('api_key', this.apikey);
+    let httparams = new HttpParams();
+      // .set('api_key', this.apikey);
     if (optionalParam) {
       optionalParam.keys().forEach((key) => {
         httparams = httparams.set(key, optionalParam.get(key));

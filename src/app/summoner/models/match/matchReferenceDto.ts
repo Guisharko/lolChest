@@ -1,9 +1,9 @@
-export class Match {
+export class MatchReferenceDto {
   platformId: string;
   gameId: string;
-  champion: string;
-  queue: string;
-  season: string;
+  champion: number;
+  queue: number;
+  season: number;
   timestamp: string;
   role: string;
   lane: string;
