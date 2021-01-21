@@ -1,5 +1,5 @@
 export class ChampionMasteries {
-  championId: string;
+  championId: number;
   championLevel: string;
   championPoints: string;
   lastPlayTime: string;

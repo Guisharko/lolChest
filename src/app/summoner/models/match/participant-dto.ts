@@ -7,7 +7,9 @@ import { ChampionMasteries } from '../champion-masteries';
 export class ParticipantDto {
   participantId: number;
   championId: number;
-  champion: ChampionMasteries;
+  championImage: string;
+  championImageMini: string;
+  champion: { championName: string, championImage: string, championImageMini: string; };
   runes: RuneDto[];
   stats: ParticipantStatsDto;
   teamId: number;

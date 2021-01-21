@@ -8,13 +8,14 @@ import { UiModule } from '../ui/ui.module';
 import { MiniCardChampComponent } from './components/mini-card-champ/mini-card-champ.component';
 import { ModalChampComponent } from './components/modal-champ/modal-champ.component';
 import { ValuesPipe } from './pipes/values.pipe';
+import { ItemMiniComponent } from './components/item-mini/item-mini.component';
 
 @NgModule({
-  declarations: [OrderByPipe, CardChampComponent, HeaderWithSummonerComponent, HeaderWithoutSummonerComponent, MiniCardChampComponent, ModalChampComponent, ValuesPipe],
+  declarations: [OrderByPipe, CardChampComponent, HeaderWithSummonerComponent, HeaderWithoutSummonerComponent, MiniCardChampComponent, ModalChampComponent, ValuesPipe, ItemMiniComponent],
   imports: [
     CommonModule,
     UiModule
   ],
-  exports: [OrderByPipe, CardChampComponent, HeaderWithSummonerComponent, HeaderWithoutSummonerComponent, MiniCardChampComponent, ValuesPipe]
+  exports: [OrderByPipe, CardChampComponent, HeaderWithSummonerComponent, HeaderWithoutSummonerComponent, MiniCardChampComponent, ValuesPipe, ItemMiniComponent]
 })
 export class SharedModule { }

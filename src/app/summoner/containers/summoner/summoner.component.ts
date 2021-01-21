@@ -82,7 +82,6 @@ export class SummonerComponent implements OnInit {
   }
 
   value = '';
-
   getSummonersChampions(regionValue = 'euw1') {
     this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
       this.summoner = summoner;
@@ -92,7 +91,7 @@ export class SummonerComponent implements OnInit {
           this.cdragon.getChampionData(champion.championId).subscribe(champData => {
             champion.championName = champData.name;
           });
-          if (!this.jsonRoles[champion.championId]){
+          if (!this.jsonRoles[champion.championId]) {
           champion.championRoles = '';
           } else {
             champion.championRoles = this.jsonRoles[champion.championId].roles;

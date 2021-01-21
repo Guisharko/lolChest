@@ -5,7 +5,8 @@
         <app-header class="row d-flex justify-content-center"></app-header>
         <form class="row d-flex justify-content-center form-inline md-form">
           <input class="form-control mr-sm-2 col-md-6" type="search" #box placeholder="Summoner" aria-label="Search">
-          <select id="regionSelect" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
+          <select id="regionSelect" class="browser-default custom-select" placeholder="regionValue"
+                  [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
             <option *ngFor="let region of regions" #regionBox [value]="region.value">
               {{region.viewValue}}
             </option>
@@ -22,7 +23,8 @@
         <img src="../../../../assets/images/chest-mini.png" alt="logo-header">
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" #box placeholder="{{summoner.name}}" aria-label="Search">
-          <select id="region" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
+          <select id="region" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue"
+                  [ngModelOptions]="{standalone: true}">
             <option *ngFor="let region of regions" #regionBox [value]="region.value">
               {{region.viewValue}}
             </option>
@@ -33,29 +35,100 @@
       </nav>
     </div>
     <div class="container">
-      <div class="row">
-        <div class="col-12"
-             *ngFor="let matchDto of matchList">
-          {{matchDto.gameMode}}
-          <div class="col-12" *ngFor="let participant of matchDto.participantIdentities  ; let index = index;">
-            <div *ngIf="matchDto.participants[index].teamId == 100">
-              {{ participant.player.summonerName }}
-              <!-- <app-mini-card-champ [champion]="matchDto.participants[index].champion"></app-mini-card-champ> -->
-              <!-- {{ matchDto.participants[index].spell1Id}}
-              {{ matchDto.participants[index].spell2Id}} -->
+      <div class="row" *ngFor="let matchDto of matchDtos">
+        {{matchDto.gameMode}}
+        <div class="col-5 blue">
+          <div *ngFor="let participant of matchDto.participants|slice:0:5; let index = index;">
+            <div class="row">
+              <div class="champ-mini text-center col-md-3">
+                <img
+                  src="https://cdn.communitydragon.org/{{ version }}/champion/{{ participant.championId}}/square"
+                  alt="{{ participant.championId}}"
+                  title="{{ participant.championId}}" (click)="openXl(toto)">
+              </div>
+              <div class="col-md-3">
+                {{ matchDto.participantIdentities[index].player.summonerName }}
+                Spells
+                {{ participant.spell1Id}}
+                {{ participant.spell2Id}}
+              </div>
+              <div class="col-md-3">
+                Items
+                <app-item-mini [version]="version" [itemId]="participant.stats.item0"></app-item-mini>
+                <app-item-mini [version]="version" [itemId]="participant.stats.item1"></app-item-mini>
+                <app-item-mini [version]="version" [itemId]="participant.stats.item2"></app-item-mini>
+                <app-item-mini [version]="version" [itemId]="participant.stats.item3"></app-item-mini>
+                <app-item-mini [version]="version" [itemId]="participant.stats.item4"></app-item-mini>
+                <app-item-mini [version]="version" [itemId]="participant.stats.item5"></app-item-mini>
+                <app-item-mini [version]="version" [itemId]="participant.stats.item6"></app-item-mini>
+              </div>
+              <div class="col-md-3">
+                KDA : {{ participant.stats.kills}} / {{ participant.stats.deaths}}
+                / {{ participant.stats.assists}}
+              </div>
             </div>
-            <div *ngIf="matchDto.participants[index].teamId == 200">
-              {{ participant.player.summonerName }}
-              <!-- <app-mini-card-champ [champion]="matchDto.participants[index].champion"></app-mini-card-champ> -->
-              <!-- {{ matchDto.participants[index].spell1Id}}
-              {{ matchDto.participants[index].spell2Id}} -->
-            </div>
+            <ng-template #toto let-modal>
+              <div class="modal-header text-center">
+                <h4 class="modal-title">{{ matchDto.participantIdentities[index].player.summonerName }}</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="text-center col-md-4">
+                    <img
+                      src="https://cdn.communitydragon.org/{{ version }}/champion/{{ participant.championId}}/portrait"
+                      alt="{{ participant.championId}}"
+                      title="{{ participant.championId}}" class="champ">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="row">
+                      <div class="col-md-3">
+                        Spells
+                        {{ participant.spell1Id}}
+                        {{ participant.spell2Id}}
+                      </div>
+                      <div class="col-md-3">
+                        Items
+                        <app-item-mini [version]="version" [itemId]="participant.stats.item0"></app-item-mini>
+                        <app-item-mini [version]="version" [itemId]="participant.stats.item1"></app-item-mini>
+                        <app-item-mini [version]="version" [itemId]="participant.stats.item2"></app-item-mini>
+                        <app-item-mini [version]="version" [itemId]="participant.stats.item3"></app-item-mini>
+                        <app-item-mini [version]="version" [itemId]="participant.stats.item4"></app-item-mini>
+                        <app-item-mini [version]="version" [itemId]="participant.stats.item5"></app-item-mini>
+                      </div>
+                      <div class="col-md-3">
+                        KDA : {{ participant.stats.kills}}
+                        / {{ participant.stats.deaths}}
+                        / {{ participant.stats.assists}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
           </div>
+        </div>
+        <div class="col-5 red">
+          <div *ngFor="let participant of matchDto.participants|slice:5:10 ; let index = index;">
+            <div class="row">
+              <div class="champ-mini text-center col-md-3">
+                <img
+                  src="https://cdn.communitydragon.org/{{ version }}/champion/{{ participant.championId}}/square"
+                  alt="{{ participant.championId}}"
+                  title="{{ participant.championId}}" class="champ">
+              </div>
+              <div class="col-md-3">
+                {{ matchDto.participantIdentities[index + 5].player.summonerName }}
+                {{ participant.spell1Id}}
+                {{ participant.spell2Id}}
+              </div>
+            </div>
 
-
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-

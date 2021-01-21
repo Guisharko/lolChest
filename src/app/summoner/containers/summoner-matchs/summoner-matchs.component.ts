@@ -13,8 +13,10 @@ import {MatchlistDto} from '../../models/match/matchlist-dto';
 import {MatchDto} from '../../models/match/match-dto';
 import {MatchReferenceDto} from '../../models/match/matchReferenceDto';
 import {MatchesService} from '../../services/matches.service';
-import { ParticipantIdentityDto } from '../../models/match/participant-identity-dto';
-import { ParticipantDto } from '../../models/match/participant-dto';
+import {ParticipantIdentityDto} from '../../models/match/participant-identity-dto';
+import {ParticipantDto} from '../../models/match/participant-dto';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DdragonService} from '../../services/ddragon.service';
 
 @Component({
   selector: 'app-summoner-matchs',
@@ -31,10 +33,11 @@ export class SummonerMatchsComponent implements OnInit {
   searchChamp;
   matchlistDto: MatchlistDto;
   matchDto: MatchDto;
+  matchDtos: MatchDto[] = [];
   matchReferenceDto: MatchReferenceDto;
   regionValue = 'euw1';
   property = 'championPoints';
-  nbResults = 20;
+  nbResults = 3;
   matchList;
   regions = [
     {value: 'euw1', viewValue: 'EUW-1'},
@@ -55,27 +58,24 @@ export class SummonerMatchsComponent implements OnInit {
     private http: HttpClient,
     private championService: ChampionService,
     private fb: FormBuilder,
-    private cdragon: CdragonService
+    private cdragon: CdragonService,
+    private modalService: NgbModal,
+    private ddragonService: DdragonService,
   ) {
   }
-
+  version = this.ddragonService.getVersion();
   value = 'Guisharko';
-
+  openXl(content) {
+    this.modalService.open(content, { size: 'xl' });
+  }
   getSummonersMatches(regionValue = 'euw1') {
     this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
       this.summoner = summoner;
-      let matchDtos= [];
       this.summonerService.getMatchlists(regionValue, this.summoner.accountId).subscribe(matchlist => {
         matchlist.matches.slice(0, this.nbResults).forEach((matchReferenceDto: MatchReferenceDto, index: number) => {
           this.matchesService.getMatch(regionValue, matchReferenceDto.gameId).subscribe((matchDto: MatchDto) => {
-            
-             //this.cdragon.getChampionData(matchDto.participants[index].championId).subscribe(champData => {
-              //matchDto.participants[index].champion.championName = champData.name;
-            //});
-            matchDto.participants[index].champion.championImage = this.cdragon.getPortrait(matchDto.participants[index].championId);
-            matchDto.participants[index].champion.championImageMini = this.cdragon.getMini(matchDto.participants[index].championId);
-             this.matchList = matchlist;
-             console.log(this.matchList);
+            this.matchDtos[index] = matchDto;
+            console.log(this.matchDtos[index]);
           });
         });
       });
