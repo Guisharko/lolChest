@@ -1,1 +1,53 @@
-<p>modal-champ works!</p>
+<div class="modal-body">
+  <div class="row">
+    <div class="text-center col-md-4">
+      <img
+        src="https://cdn.communitydragon.org/{{ version }}/champion/{{ participant.championId}}/portrait"
+        alt="{{ participant.championId}}"
+        title="{{ participant.championId}}" class="champ">
+    </div>
+    <div class="col-md-8">
+      <div class="row current-game">
+        <div class="col-md-3">
+          Spells
+          {{ participant.spell1Id}}
+          {{ participant.spell2Id}}
+        </div>
+        <div class="col-md-3">
+          Items
+          <div class="row items">
+            <div class="col-4"><app-item-mini [version]="version" [itemId]="participant.stats.item0"></app-item-mini></div>
+            <div class="col-4"><app-item-mini [version]="version" [itemId]="participant.stats.item1"></app-item-mini></div>
+            <div class="col-4"><app-item-mini [version]="version" [itemId]="participant.stats.item2"></app-item-mini></div>
+            <div class="col-4"><app-item-mini [version]="version" [itemId]="participant.stats.item3"></app-item-mini></div>
+            <div class="col-4"><app-item-mini [version]="version" [itemId]="participant.stats.item4"></app-item-mini></div>
+            <div class="col-4"><app-item-mini [version]="version" [itemId]="participant.stats.item5"></app-item-mini></div>
+            <div class="col-4"><app-item-mini [version]="version" [itemId]="participant.stats.item6"></app-item-mini></div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <p>KDA : {{ participant.stats.kills}}/{{ participant.stats.deaths}}/{{ participant.stats.assists}}</p>
+          <p>minions/min : {{ ((participant.stats.totalMinionsKilled + participant.stats.neutralMinionsKilled  + participant.stats.neutralMinionsKilledEnemyJungle  + participant.stats.neutralMinionsKilledTeamJungle) / (matchDto.gameDuration / 60 ))| number }}</p>
+          <p>minions : {{ participant.stats.totalMinionsKilled + participant.stats.neutralMinionsKilled  + participant.stats.neutralMinionsKilledEnemyJungle  + participant.stats.neutralMinionsKilledTeamJungle }}</p>
+          <p>golds: {{ participant.stats.goldEarned}}</p>
+        </div>
+      </div>
+      <div class="row global-stats">
+        <h2>Global {{matchDto.gameType}} Stats</h2>
+        <div class="col-md-12">
+          <div class="row">
+            <p class="col-md-6">Number of Games : {{numberOfGames}}</p>
+            <p class="col-md-6">KDA : {{ (kills / numberOfGames)| number }}/{{ (deaths / numberOfGames)| number }}/{{ (assists / numberOfGames)| number }}</p>
+            <p class="col-md-6">Stats KDA : {{ (kda / numberOfGames)| number }}</p>
+            <p class="col-md-6">minions/min : {{ (minionsKilledPerMin / numberOfGames)| number  }}</p>
+            <p class="col-md-6">minions : {{ (totalOfMinionsKilled / numberOfGames) | number }}</p>
+            <p class="col-md-6">neutralMinionsKilled : {{ (neutralMinionsKilled / numberOfGames) | number }}</p>
+            <p class="col-md-6">neutralMinionsKilledEnemyJungle : {{ (neutralMinionsKilledEnemyJungle / numberOfGames) | number}}</p>
+            <p class="col-md-6">neutralMinionsKilledTeamJungle : {{ (neutralMinionsKilledTeamJungle / numberOfGames) | number}}</p>
+            <p class="col-md-6">golds: {{ (golds / numberOfGames)| number }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

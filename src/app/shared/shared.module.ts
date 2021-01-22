@@ -11,11 +11,26 @@ import { ValuesPipe } from './pipes/values.pipe';
 import { ItemMiniComponent } from './components/item-mini/item-mini.component';
 
 @NgModule({
-  declarations: [OrderByPipe, CardChampComponent, HeaderWithSummonerComponent, HeaderWithoutSummonerComponent, MiniCardChampComponent, ModalChampComponent, ValuesPipe, ItemMiniComponent],
+  declarations: [OrderByPipe,
+    CardChampComponent,
+    HeaderWithSummonerComponent,
+    HeaderWithoutSummonerComponent,
+    MiniCardChampComponent,
+    ModalChampComponent,
+    ValuesPipe,
+    ItemMiniComponent
+  ],
   imports: [
     CommonModule,
     UiModule
   ],
-  exports: [OrderByPipe, CardChampComponent, HeaderWithSummonerComponent, HeaderWithoutSummonerComponent, MiniCardChampComponent, ValuesPipe, ItemMiniComponent]
+  exports: [OrderByPipe,
+    CardChampComponent,
+    HeaderWithSummonerComponent,
+    HeaderWithoutSummonerComponent,
+    MiniCardChampComponent,
+    ValuesPipe,
+    ItemMiniComponent, ModalChampComponent
+  ]
 })
 export class SharedModule { }

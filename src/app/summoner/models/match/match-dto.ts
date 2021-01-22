@@ -7,7 +7,7 @@ export class MatchDto {
   participantIdentities: ParticipantIdentityDto[];
   queueId: number;
   gameType: string;
-  gameDuration: string;
+  gameDuration: number;
   teams: TeamStatsDto[];
   platformId: string;
   gameCreation: string;

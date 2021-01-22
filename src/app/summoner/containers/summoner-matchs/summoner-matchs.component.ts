@@ -17,6 +17,7 @@ import {ParticipantIdentityDto} from '../../models/match/participant-identity-dt
 import {ParticipantDto} from '../../models/match/participant-dto';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DdragonService} from '../../services/ddragon.service';
+import {ChampionStats} from '../../models/champion-stats';
 
 @Component({
   selector: 'app-summoner-matchs',
@@ -27,18 +28,15 @@ export class SummonerMatchsComponent implements OnInit {
   summoner: Summoner;
   champions: ChampionMasteries[];
   leagues: Leagues[];
-  tfts: Tft[];
   @Output() name: string;
-  jsonRoles: any = (role as any).default;
   searchChamp;
-  matchlistDto: MatchlistDto;
-  matchDto: MatchDto;
+  championStatsPerGame: [];
+  champion: ChampionMasteries;
   matchDtos: MatchDto[] = [];
-  matchReferenceDto: MatchReferenceDto;
   regionValue = 'euw1';
   property = 'championPoints';
   nbResults = 3;
-  matchList;
+  championStats: ChampionStats[];
   regions = [
     {value: 'euw1', viewValue: 'EUW-1'},
     {value: 'br1', viewValue: 'BR-1'},
@@ -51,6 +49,20 @@ export class SummonerMatchsComponent implements OnInit {
     {value: 'ru', viewValue: 'RU'},
     {value: 'tr1', viewValue: 'TR-1'},
   ];
+  private numberOfGames = 0;
+  private deaths = 0;
+  private kills = 0;
+  private golds = 0;
+  private assists = 0;
+  private kda = 0;
+  private gameDurationSeconds = 0;
+  private gameDurationMinutes = 0;
+  private totalMinionsKilled = 0;
+  private neutralMinionsKilled = 0;
+  private neutralMinionsKilledEnemyJungle = 0;
+  private neutralMinionsKilledTeamJungle = 0;
+  private totalOfMinionsKilled = 0;
+  private minionsKilledPerMin = 0;
 
   constructor(
     private summonerService: SummonerService,
@@ -65,44 +77,101 @@ export class SummonerMatchsComponent implements OnInit {
   }
   version = this.ddragonService.getVersion();
   value = 'Guisharko';
+  red: 'red';
+  blue: 'blue';
   openXl(content) {
     this.modalService.open(content, { size: 'xl' });
   }
-  getSummonersMatches(regionValue = 'euw1') {
+
+  getSummonersMatchesBySummoner(regionValue = 'euw1') {
     this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
       this.summoner = summoner;
-      this.summonerService.getMatchlists(regionValue, this.summoner.accountId).subscribe(matchlist => {
-        matchlist.matches.slice(0, this.nbResults).forEach((matchReferenceDto: MatchReferenceDto, index: number) => {
+      this.getSummonersMatches(regionValue, this.summoner.accountId, this.nbResults, null, null, null);
+
+      this.summonerService.getLeague(this.summoner.id).subscribe(leagues => {
+       leagues.forEach(league => {
+         league.queueType = league.queueType.replace('RANKED_', '');
+         league.queueType = league.queueType.replace('_5x5', '/DUO');
+         league.queueType = league.queueType.replace('_SR', '');
+      });
+       this.leagues = leagues;
+     });
+    });
+  }
+  getChampionSeasonStats(accountId, championId, seasonId, regionValue = 'euw1', gameType) {
+    this.numberOfGames = 0;
+    this.deaths = 0;
+    this.kills = 0;
+    this.golds = 0;
+    this.assists = 0;
+    this.kda = 0;
+    this.gameDurationSeconds = 0;
+    this.gameDurationMinutes = 0;
+    this.totalMinionsKilled = 0;
+    this.neutralMinionsKilled = 0;
+    this.neutralMinionsKilledEnemyJungle = 0;
+    this.neutralMinionsKilledTeamJungle = 0;
+    this.totalOfMinionsKilled = 0;
+    this.minionsKilledPerMin = 0;
+    this.getSummonersMatches(regionValue, accountId, null, championId, seasonId, gameType);
+  }
+
+  getSummonersMatches(regionValue, accountId, nbResults, championId, seasonId, gameType) {
+    this.summonerService.getMatchlists(regionValue, accountId).subscribe(matchlist => {
+      if (nbResults) {
+        this.getMatchList(matchlist, regionValue, nbResults);
+      } else {
+        matchlist.matches.slice(0, 10).forEach((matchReferenceDto: MatchReferenceDto, index: number) => {
           this.matchesService.getMatch(regionValue, matchReferenceDto.gameId).subscribe((matchDto: MatchDto) => {
-            this.matchDtos[index] = matchDto;
-            console.log(this.matchDtos[index]);
+            matchDto.participants.forEach((participant, participantNumber ) => {
+              if (matchDto.seasonId === seasonId && matchDto.gameMode !== gameType) {
+                if (matchDto.participantIdentities[participantNumber].player.accountId === accountId) {
+                  if (participant.championId === championId) {
+                    this.kills += participant.stats.kills;
+                    this.deaths += participant.stats.deaths;
+                    this.assists += participant.stats.assists;
+                    this.golds += participant.stats.goldEarned;
+                    this.kda +=
+                      (participant.stats.kills + participant.stats.assists) / participant.stats.deaths;
+                    this.gameDurationSeconds += matchDto.gameDuration;
+                    this.gameDurationMinutes +=
+                      matchDto.gameDuration / 60;
+                    this.totalMinionsKilled += participant.stats.totalMinionsKilled;
+                    this.neutralMinionsKilled += participant.stats.neutralMinionsKilled;
+                    this.neutralMinionsKilledEnemyJungle += participant.stats.neutralMinionsKilledEnemyJungle;
+                    this.neutralMinionsKilledTeamJungle += participant.stats.neutralMinionsKilledTeamJungle;
+                    this.totalOfMinionsKilled +=
+                      participant.stats.totalMinionsKilled +
+                      participant.stats.neutralMinionsKilled +
+                      participant.stats.neutralMinionsKilledEnemyJungle +
+                      participant.stats.neutralMinionsKilledTeamJungle;
+                    this.minionsKilledPerMin +=
+                      this.totalOfMinionsKilled /
+                      this.gameDurationMinutes;
+                    this.numberOfGames += 1;
+                  }
+                }
+              }
+            });
           });
         });
-      });
-
-//      this.summonerService.getLeague(this.summoner.id).subscribe(leagues => {
-//        leagues.forEach(league => {
-//          league.queueType = league.queueType.replace('RANKED_', '');
-//          league.queueType = league.queueType.replace('_5x5', '/DUO');
-//          league.queueType = league.queueType.replace('_SR', '');
-//       });
-//        this.leagues = leagues;
-//      });
-//      this.summonerService.getTft(this.summoner.id).subscribe(tfts => {
-//        tfts.forEach(tft => {
-//          tft.queueType = tft.queueType.replace('RANKED_', '');
-//       });
-//        this.tfts = tfts;
-//      });
+      }
     });
   }
 
+  getMatchList(matchlist, regionValue, nbResults) {
+    matchlist.matches.slice(0, nbResults).forEach((matchReferenceDto: MatchReferenceDto, index: number) => {
+      this.matchesService.getMatch(regionValue, matchReferenceDto.gameId).subscribe((matchDto: MatchDto) => {
+        this.matchDtos[index] = matchDto;
+      });
+    });
+  }
   ngOnInit() {
-    this.getSummonersMatches();
+    this.getSummonersMatchesBySummoner();
   }
 
   onEnter(value: string, region: string) {
     this.value = value;
-    this.getSummonersMatches(region);
+    this.getSummonersMatchesBySummoner(region);
   }
 }
