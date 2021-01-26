@@ -38,7 +38,19 @@ export class CurrentMatchComponent implements OnInit {
     @Inject(DOCUMENT) private document: Document
 ) {
   }
-
+  regions = [
+    {value: 'euw1', viewValue: 'EUW-1'},
+    {value: 'br1', viewValue: 'BR-1'},
+    {value: 'eun1', viewValue: 'EUN-1'},
+    {value: 'jp1', viewValue: 'JP-1'},
+    {value: 'kr', viewValue: 'KR'},
+    {value: 'la1', viewValue: 'LA-1'},
+    {value: 'la2', viewValue: 'LA-2'},
+    {value: 'oc1', viewValue: 'OC-1'},
+    {value: 'ru', viewValue: 'RU'},
+    {value: 'tr1', viewValue: 'TR-1'},
+  ];
+  regionValue = 'euw1';
   value = '';
 
   getCurrentGame(regionValue = 'euw1', value) {

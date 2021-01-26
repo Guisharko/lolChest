@@ -10,7 +10,7 @@ import {CurrentGameParticipant} from '../../../summoner/models/current-game-part
 export class CardChampComponent implements OnInit {
   @Input() champion: ChampionMasteries;
   @Input() participant: CurrentGameParticipant;
-  @Input() mini = '';
+  @Input() mini:string;
   constructor() { }
 
   ngOnInit() {

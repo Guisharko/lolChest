@@ -113,6 +113,7 @@ export class SummonerComponent implements OnInit {
           }
 
           champion.championImage = this.cdragon.getPortrait(champion.championId);
+          champion.championImageMini = this.cdragon.getMini(champion.championId);
 
         });
         this.champions = champions;
