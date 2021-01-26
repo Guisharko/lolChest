@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {ChampionMasteries} from '../../../summoner/models/champion-masteries';
-import {CurrentGameParticipant} from "../../../summoner/models/current-game-participant";
+import {CurrentGameParticipant} from '../../../summoner/models/current-game-participant';
 
 @Component({
   selector: 'app-card-champ',
@@ -10,6 +10,7 @@ import {CurrentGameParticipant} from "../../../summoner/models/current-game-part
 export class CardChampComponent implements OnInit {
   @Input() champion: ChampionMasteries;
   @Input() participant: CurrentGameParticipant;
+  @Input() mini = '';
   constructor() { }
 
   ngOnInit() {

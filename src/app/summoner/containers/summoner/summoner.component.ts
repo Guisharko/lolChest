@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, Pipe, PipeTransform} from '@angular/core';
 import {SummonerService} from '../../services/summoner.service';
 import {HttpClient} from '@angular/common/http';
 import {Summoner} from '../../models/summoner';
@@ -10,7 +10,10 @@ import {Leagues} from '../../models/leagues';
 import {Tft} from '../../models/tft';
 import {ChampionService} from '../../services/champion.service';
 import {CdragonService} from '../../services/cdragron.service';
-
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {switchMap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-summoner',
@@ -19,6 +22,9 @@ import {CdragonService} from '../../services/cdragron.service';
 })
 export class SummonerComponent implements OnInit {
   summoner: Summoner;
+  summonerName: string;
+  summonerRegion: string;
+  summoner$: Observable<Summoner>;
   champions: ChampionMasteries[];
   leagues: Leagues[];
   tfts: Tft[];
@@ -29,6 +35,7 @@ export class SummonerComponent implements OnInit {
   matchDto;
   chestValue = '';
   regionValue = 'euw1';
+  mini = 'mini';
   roleValue = '';
   roleIconValue = '';
   property = 'championPoints';
@@ -77,15 +84,23 @@ export class SummonerComponent implements OnInit {
     private http: HttpClient,
     private championService: ChampionService,
     private fb: FormBuilder,
-    private cdragon: CdragonService
+    private cdragon: CdragonService,
+    private router: Router,
+    private route: ActivatedRoute,
+    @Inject(DOCUMENT) private document: Document
   ) {
   }
 
   value = '';
-  getSummonersChampions(regionValue = 'euw1') {
+  pathValue$: Observable<string>;
+  pathValue: string;
+
+  getSummonersChampions(regionValue = 'euw1', value) {
+    if (value) {
+      this.value = value;
+    }
     this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
       this.summoner = summoner;
-      console.log(this.summoner.accountId);
       this.summonerService.getChampionMasteries(regionValue, this.summoner.id).subscribe(champions => {
         champions.forEach(champion => {
           this.cdragon.getChampionData(champion.championId).subscribe(champData => {
@@ -120,11 +135,15 @@ export class SummonerComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getSummonersChampions();
+    this.summonerName = this.route.snapshot.paramMap.get('summoner');
+    this.summonerRegion = this.route.snapshot.paramMap.get('region');
+    if (this.summonerName) {
+      this.getSummonersChampions(this.summonerRegion, this.summonerName);
+    }
   }
 
   onEnter(value: string, region: string) {
     this.value = value;
-    this.getSummonersChampions(region);
+    this.document.location.href = '/summoner/' + region + '/' + this.value;
   }
 }

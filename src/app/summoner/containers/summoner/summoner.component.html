@@ -5,7 +5,8 @@
         <app-header class="row d-flex justify-content-center"></app-header>
         <form class="row d-flex justify-content-center form-inline md-form">
           <input class="form-control mr-sm-2 col-md-6" type="search" #box placeholder="Summoner" aria-label="Search">
-          <select id="regionSelect" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
+          <select id="regionSelect" class="browser-default custom-select" placeholder="regionValue"
+                  [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
             <option *ngFor="let region of regions" #regionBox [value]="region.value">
               {{region.viewValue}}
             </option>
@@ -22,7 +23,8 @@
         <img src="../../../../assets/images/chest-mini.png" alt="logo-header">
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" #box placeholder="{{summoner.name}}" aria-label="Search">
-          <select id="region" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue" [ngModelOptions]="{standalone: true}">
+          <select id="region" class="browser-default custom-select" placeholder="regionValue" [(ngModel)]="regionValue"
+                  [ngModelOptions]="{standalone: true}">
             <option *ngFor="let region of regions" #regionBox [value]="region.value">
               {{region.viewValue}}
             </option>
@@ -30,6 +32,19 @@
           <button mdbBtn size="sm" outline="true" rounded="true" class="btn btn-outline-dark search"
                   (click)="onEnter(box.value, regionValue)"><i class="fas fa-search"></i></button>
         </form>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a href="/summoner/{{summonerRegion}}/{{summonerName}}">Chests</a>
+            </li>
+            <li class="nav-item active">
+              <a href="/summoner/{{summonerRegion}}/{{summonerName}}/current_match">Current Match</a>
+            </li>
+            <li class="nav-item active">
+              <a href="/summoner/{{summonerRegion}}/{{summonerName}}/matches">Matches</a>
+            </li>
+          </ul>
+        </div>
       </nav>
     </div>
     <div class="background-chances">
@@ -50,63 +65,64 @@
         <div class="row mt-5">
           <div class="col-md-4 mb-1 col-lg-2 col-xs-6"
                *ngFor="let champion of champions | filter:roleIconValue |filter:'false' |slice:0:6">
-          <app-card-champ [champion]="champion"></app-card-champ>
+            <app-card-champ [champion]="champion"></app-card-champ>
           </div>
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container mini-champ">
       <div class="row justify-content-center" id="accordion">
-            <div class="mt-3 mb-3 d-flex justify-content-center col-12" id="headingOne">
-              <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Filters <i class="fas fa-cog"></i>
-              </button>
+        <div class="mt-3 mb-3 d-flex justify-content-center col-12" id="headingOne">
+          <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseOne"
+                  aria-expanded="true" aria-controls="collapseOne">
+            Filters <i class="fas fa-cog"></i>
+          </button>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="row mb-5">
+            <div class="md-form mt-2 mb-2 col-lg-3 col-md-6">
+              <label for="searchChamp" class="">Champion</label>
+              <input type="text" name="text" [(ngModel)]="searchChamp" id="searchChamp" class="form-control">
             </div>
-          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-            <div class="row mb-5">
-              <div class="md-form mt-2 mb-2 col-lg-3 col-md-6">
-                <label for="searchChamp" class="">Champion</label>
-                <input type="text" name="text" [(ngModel)]="searchChamp" id="searchChamp" class="form-control">
-              </div>
-              <div class="md-form mt-2 mb-2 col-lg-2 col-md-6">
-                <label for="role" class="">Role</label>
-                <select id="role" class="browser-default custom-select" [(ngModel)]="roleValue">
-                  <option *ngFor="let role of roles" [value]="role.value">
-                    {{role.viewValue}}
-                  </option>
-                </select>
-              </div>
-              <div class="md-form mt-2 mb-2 col-lg-2 col-md-6">
-                <label for="chest" class="">Chest</label>
-                <select id="chest" class="browser-default custom-select" [(ngModel)]="chestValue">
-                  <option *ngFor="let chestOption of chestOptions" [value]="chestOption.value">
-                    {{chestOption.viewValue}}
-                  </option>
-                </select>
-              </div>
-              <div class="md-form mt-2 mb-2 col-lg-3 col-md-6">
-                <label for="orderyBy" class="">Order</label>
-                <select id="orderyBy" class="browser-default custom-select" [(ngModel)]="property">
-                  <option *ngFor="let orderyByOption of orderyByOptions" [value]="orderyByOption.value">
-                    {{orderyByOption.viewValue}}
-                  </option>
-                </select>
-              </div>
-              <div class="md-form mt-2 mb-2 col-lg-2 col-md-3">
-                <label for="orderyByValue" class="">By</label>
-                <select id="orderyByValue" class="browser-default custom-select" [(ngModel)]="propertyValue">
-                  <option value='asc'>Asc</option>
-                  <option value='desc'>Desc</option>
-                </select>
-              </div>
+            <div class="md-form mt-2 mb-2 col-lg-2 col-md-6">
+              <label for="role" class="">Role</label>
+              <select id="role" class="browser-default custom-select" [(ngModel)]="roleValue">
+                <option *ngFor="let role of roles" [value]="role.value">
+                  {{role.viewValue}}
+                </option>
+              </select>
             </div>
+            <div class="md-form mt-2 mb-2 col-lg-2 col-md-6">
+              <label for="chest" class="">Chest</label>
+              <select id="chest" class="browser-default custom-select" [(ngModel)]="chestValue">
+                <option *ngFor="let chestOption of chestOptions" [value]="chestOption.value">
+                  {{chestOption.viewValue}}
+                </option>
+              </select>
+            </div>
+            <div class="md-form mt-2 mb-2 col-lg-3 col-md-6">
+              <label for="orderyBy" class="">Order</label>
+              <select id="orderyBy" class="browser-default custom-select" [(ngModel)]="property">
+                <option *ngFor="let orderyByOption of orderyByOptions" [value]="orderyByOption.value">
+                  {{orderyByOption.viewValue}}
+                </option>
+              </select>
+            </div>
+            <div class="md-form mt-2 mb-2 col-lg-2 col-md-3">
+              <label for="orderyByValue" class="">By</label>
+              <select id="orderyByValue" class="browser-default custom-select" [(ngModel)]="propertyValue">
+                <option value='asc'>Asc</option>
+                <option value='desc'>Desc</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-md-4 mb-1 col-lg-2 col-xs-6"
+        <div class="col-md-1 mb-1"
              *ngFor="let champion of champions | filter:searchChamp |filter:chestValue|orderBy:propertyValue:property| filter:roleValue ">
-             <app-card-champ [champion]="champion"></app-card-champ>
+          <app-card-champ [champion]="champion" [mini]="mini"></app-card-champ>
         </div>
       </div>
     </div>

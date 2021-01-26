@@ -1,4 +1,4 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, Inject, OnInit, Output} from '@angular/core';
 import {Summoner} from '../../models/summoner';
 import {ChampionMasteries} from '../../models/champion-masteries';
 import {Leagues} from '../../models/leagues';
@@ -18,6 +18,8 @@ import {ParticipantDto} from '../../models/match/participant-dto';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DdragonService} from '../../services/ddragon.service';
 import {ChampionStats} from '../../models/champion-stats';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-summoner-matchs',
@@ -73,17 +75,25 @@ export class SummonerMatchsComponent implements OnInit {
     private cdragon: CdragonService,
     private modalService: NgbModal,
     private ddragonService: DdragonService,
+    private router: Router,
+    private route: ActivatedRoute,
+    @Inject(DOCUMENT) private document: Document
   ) {
   }
   version = this.ddragonService.getVersion();
-  value = 'Guisharko';
+  value = '';
   red: 'red';
   blue: 'blue';
+  summonerName: string;
+  summonerRegion: string;
   openXl(content) {
     this.modalService.open(content, { size: 'xl' });
   }
 
-  getSummonersMatchesBySummoner(regionValue = 'euw1') {
+  getSummonersMatchesBySummoner(regionValue = 'euw1', value) {
+    if (value) {
+      this.value = value;
+    }
     this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
       this.summoner = summoner;
       this.getSummonersMatches(regionValue, this.summoner.accountId, this.nbResults, null, null, null);
@@ -167,11 +177,15 @@ export class SummonerMatchsComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.getSummonersMatchesBySummoner();
+    this.summonerName = this.route.snapshot.paramMap.get('summoner');
+    this.summonerRegion = this.route.snapshot.paramMap.get('region');
+    if (this.summonerName) {
+      this.getSummonersMatchesBySummoner(this.summonerRegion, this.summonerName);
+    }
   }
 
   onEnter(value: string, region: string) {
     this.value = value;
-    this.getSummonersMatchesBySummoner(region);
+    this.document.location.href = '/summoner/' + region + '/' + this.value + '/matches';
   }
 }

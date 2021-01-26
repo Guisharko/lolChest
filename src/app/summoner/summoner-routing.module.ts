@@ -8,8 +8,9 @@ import {SummonerMatchsComponent} from './containers/summoner-matchs/summoner-mat
 const routes: Routes = [
   // { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: '', component: SummonerComponent },
-  { path: 'current_match', component: CurrentMatchComponent },
-  { path: 'matches', component: SummonerMatchsComponent },
+  { path: 'summoner/:region/:summoner/current_match', component: CurrentMatchComponent },
+  { path: 'summoner/:region/:summoner/matches', component: SummonerMatchsComponent },
+  { path: 'summoner/:region/:summoner', component: SummonerComponent },
 ];
 
 @NgModule({

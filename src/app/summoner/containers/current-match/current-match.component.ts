@@ -1,4 +1,4 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, Inject, OnInit, Output} from '@angular/core';
 import {Summoner} from '../../models/summoner';
 import {ChampionMasteries} from '../../models/champion-masteries';
 import {SummonerService} from '../../services/summoner.service';
@@ -11,6 +11,8 @@ import {Leagues} from '../../models/leagues';
 import {Tft} from '../../models/tft';
 import {ChampionService} from '../../services/champion.service';
 import {CdragonService} from '../../services/cdragron.service';
+import {ActivatedRoute, Router} from "@angular/router";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-current-match',
@@ -23,19 +25,26 @@ export class CurrentMatchComponent implements OnInit {
   champions: ChampionMasteries[];
   @Output() name: string;
   banned: [];
-
+  summonerName: string;
+  summonerRegion: string;
   constructor(
     private summonerService: SummonerService,
     private currentMatchService: CurrentMatchService,
     private http: HttpClient,
     private fb: FormBuilder,
-    private cdragon: CdragonService
+    private cdragon: CdragonService,
+    private router: Router,
+    private route: ActivatedRoute,
+    @Inject(DOCUMENT) private document: Document
 ) {
   }
 
-  value = 'Shikoo';
+  value = '';
 
-  getCurrentGame(regionValue = 'euw1') {
+  getCurrentGame(regionValue = 'euw1', value) {
+    if (value) {
+      this.value = value;
+    }
     this.summonerService.getSummoner(regionValue, this.value.replace(' ', '+')).subscribe(summoner => {
       this.summoner = summoner;
       this.currentMatchService.getCurrentGame(regionValue, this.summoner.id).subscribe(currentMatch => {
@@ -68,11 +77,15 @@ export class CurrentMatchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCurrentGame();
+    this.summonerName = this.route.snapshot.paramMap.get('summoner');
+    this.summonerRegion = this.route.snapshot.paramMap.get('region');
+    if (this.summonerName) {
+      this.getCurrentGame(this.summonerRegion, this.summonerName);
+    }
   }
 
-  onEnter(value: string) {
+  onEnter(value: string, region: string) {
     this.value = value;
-    this.getCurrentGame();
+    this.document.location.href = '/summoner/' + region + '/' + this.value + '/current_match';
   }
 }
