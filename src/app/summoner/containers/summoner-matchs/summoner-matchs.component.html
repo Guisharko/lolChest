@@ -59,7 +59,7 @@
                 <img
                   src="https://cdn.communitydragon.org/{{ version }}/champion/{{ participant.championId}}/square"
                   alt="{{ participant.championId}}"
-                  title="{{ participant.championId}}" (click)="openXl(championStatistics); getChampionSeasonStats(matchDto.participantIdentities[index].player.accountId, participant.championId, matchDto.seasonId)">
+                  title="{{ participant.championId}}" (click)="openXl(championStatistics); getChampionSeasonStats(matchDto.participantIdentities[index].player.accountId, participant.championId, matchDto.seasonId, summonerRegion, matchDto.gameType)">
               </div>
               <div class="col-md-3">
                 {{ matchDto.participantIdentities[index].player.summonerName }}
@@ -102,8 +102,6 @@
                 [assists]="assists"
                 [minionsKilledPerMin]="minionsKilledPerMin"
                 [totalOfMinionsKilled]="totalOfMinionsKilled"
-                [neutralMinionsKilled]="neutralMinionsKilled"
-                [neutralMinionsKilledEnemyJungle]="neutralMinionsKilledEnemyJungle"
                 [golds]="golds"
                 [side]="red"
               >
@@ -161,8 +159,6 @@
                 [assists]="assists"
                 [minionsKilledPerMin]="minionsKilledPerMin"
                 [totalOfMinionsKilled]="totalOfMinionsKilled"
-                [neutralMinionsKilled]="neutralMinionsKilled"
-                [neutralMinionsKilledEnemyJungle]="neutralMinionsKilledEnemyJungle"
                 [golds]="golds"
                 [side]="red"
               >

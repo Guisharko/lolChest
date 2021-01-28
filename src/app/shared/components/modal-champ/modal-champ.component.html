@@ -36,14 +36,11 @@
         <h2>Global Stats</h2>
         <div class="col-md-12">
           <div class="row">
-            <p class="col-md-6">Number of Games : {{numberOfGames}}</p>
+            <p class="col-md-6">Games : {{numberOfGames}}</p>
             <p class="col-md-6">KDA : {{ (kills / numberOfGames)| number }}/{{ (deaths / numberOfGames)| number }}/{{ (assists / numberOfGames)| number }}</p>
             <p class="col-md-6">Stats KDA : {{ (kda / numberOfGames)| number }}</p>
             <p class="col-md-6">minions/min : {{ (minionsKilledPerMin / numberOfGames)| number  }}</p>
             <p class="col-md-6">minions : {{ (totalOfMinionsKilled / numberOfGames) | number }}</p>
-            <p class="col-md-6">neutralMinionsKilled : {{ (neutralMinionsKilled / numberOfGames) | number }}</p>
-            <p class="col-md-6">neutralMinionsKilledEnemyJungle : {{ (neutralMinionsKilledEnemyJungle / numberOfGames) | number}}</p>
-            <p class="col-md-6">neutralMinionsKilledTeamJungle : {{ (neutralMinionsKilledTeamJungle / numberOfGames) | number}}</p>
             <p class="col-md-6">golds: {{ (golds / numberOfGames)| number }}</p>
           </div>
         </div>

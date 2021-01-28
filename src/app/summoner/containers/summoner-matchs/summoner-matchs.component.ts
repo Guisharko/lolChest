@@ -137,6 +137,7 @@ export class SummonerMatchsComponent implements OnInit {
               if (matchDto.seasonId === seasonId && matchDto.gameMode !== gameType) {
                 if (matchDto.participantIdentities[participantNumber].player.accountId === accountId) {
                   if (participant.championId === championId) {
+                    console.log(participant)
                     this.kills += participant.stats.kills;
                     this.deaths += participant.stats.deaths;
                     this.assists += participant.stats.assists;
@@ -146,15 +147,9 @@ export class SummonerMatchsComponent implements OnInit {
                     this.gameDurationSeconds += matchDto.gameDuration;
                     this.gameDurationMinutes +=
                       matchDto.gameDuration / 60;
-                    this.totalMinionsKilled += participant.stats.totalMinionsKilled;
-                    this.neutralMinionsKilled += participant.stats.neutralMinionsKilled;
-                    this.neutralMinionsKilledEnemyJungle += participant.stats.neutralMinionsKilledEnemyJungle;
-                    this.neutralMinionsKilledTeamJungle += participant.stats.neutralMinionsKilledTeamJungle;
                     this.totalOfMinionsKilled +=
                       participant.stats.totalMinionsKilled +
-                      participant.stats.neutralMinionsKilled +
-                      participant.stats.neutralMinionsKilledEnemyJungle +
-                      participant.stats.neutralMinionsKilledTeamJungle;
+                      participant.stats.neutralMinionsKilled;
                     this.minionsKilledPerMin +=
                       this.totalOfMinionsKilled /
                       this.gameDurationMinutes;
